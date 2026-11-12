@@ -8,7 +8,7 @@ on:
       - 'feature/*'
 
 env:
-  APP_NAME = solar system
+  APP_NAME = solar-system
   API_KEY = ${{ secrets.API_KEY }}      
 
 jobs:
