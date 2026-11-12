@@ -7,6 +7,10 @@ on:
       - main
       - 'feature/*'
 
+env:
+  APP_NAME = solar system
+  API_KEY = ${{ secrets.API_KEY }}      
+
 jobs:
   unit-testing:
     name: Unit Testing
@@ -19,6 +23,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: printing env variables
+        run: |
+          echo " APP_NAME: ${{ env.APP_NAME }}"
+          echo " API_KEY: ${{ secrets.API_KEY }} "   
 
       - name: Install dependencies
         run: npm install
