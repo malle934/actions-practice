@@ -8,8 +8,8 @@ on:
       - 'feature/*'
 
 env:
-  APP_NAME = solar-system
-  API_KEY = ${{ secrets.API_KEY }}      
+  APP_NAME: solar-system
+  API_KEY: ${{ secrets.API_KEY }}      
 
 jobs:
   unit-testing:
