@@ -7,28 +7,37 @@ on:
       - main
       - 'feature/*'
 
+env:
+  APP_NAME: solar system
+  API_KEY: ${{ secrets.API_KEY }}      
+
 jobs:
   unit-testing:
-    name: Unit Testing
+    name: unit testing
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: setup Nodejs
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: install dependencies
         run: npm install
 
-      - name: Run unit tests
+      - name: Printing env variable
+        run: |
+          echo ${{ APP_NAME }}
+          echo ${{ secrets.API_KEY}}  
+
+      - name: run unit test
         run: npm test
 
-      - name: Archive test results
-        if: always()
+      - name: upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: Mocha-Test-Result
-          path: test-results.xml
+          name: Mocha-test-Result
+          path: test-results.xml          
