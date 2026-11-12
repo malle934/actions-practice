@@ -1,0 +1,30 @@
+{
+  "name": "actions-practice",
+  "version": "1.0.0",
+  "description": "Small Node.js app for practicing GitHub Actions workflows",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint .",
+    "test": "mocha test/*.test.js --reporter mocha-junit-reporter --exit",
+    "test:local": "mocha test/*.test.js --exit",
+    "coverage": "nyc --reporter=lcov --reporter=text --reporter=json-summary mocha test/*.test.js --exit"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 80
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "chai-http": "^4.4.0",
+    "eslint": "^8.57.0",
+    "mocha": "^10.4.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "nyc": "^15.1.0"
+  }
+}
