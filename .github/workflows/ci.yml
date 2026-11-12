@@ -8,7 +8,7 @@ on:
       - 'feature/*'
 
 env:
-  APP_NAME: solar system
+  APP_NAME: solar-system
   API_KEY: ${{ secrets.API_KEY }}      
 
 jobs:
@@ -25,7 +25,15 @@ jobs:
         with:
           node-version: 20
 
+
+      - name: printing env variables
+        run: |
+          echo " APP_NAME: ${{ env.APP_NAME }}"
+          echo " API_KEY: ${{ secrets.API_KEY }} "   
+
+     
       - name: install dependencies
+
         run: npm install
 
       - name: Printing env variable
