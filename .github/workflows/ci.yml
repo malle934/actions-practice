@@ -19,8 +19,10 @@ jobs:
         nodejs_version: [18,19,20]
         operating_system: [ubuntu-latest,macos-latest]
         exclude:
-          - nodejs_version: [19,20]
-            operating_system: macos-latest
+           - nodejs_version: 19
+             operating_system: macos-latest
+           - nodejs_version: 20
+             operating_system: macos-latest
 
     runs-on: ${{ matrix.operating_system }}        
 
