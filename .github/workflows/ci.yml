@@ -46,7 +46,7 @@ jobs:
 
       - name: Printing env variable
         run: |
-          echo ${{ APP_NAME }}
+          echo ${{ env.APP_NAME }}
           echo ${{ secrets.API_KEY}}  
 
       - name: run unit test
