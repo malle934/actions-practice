@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - 'feature/*'
+      - cache
 
 env:
   APP_NAME: solar-system
@@ -25,7 +26,7 @@ jobs:
              operating_system: macos-latest
 
     runs-on: ${{ matrix.operating_system }}        
-
+ 
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
@@ -35,6 +36,11 @@ jobs:
         with:
           node-version: ${{ matrix.nodejs_version}}
 
+      - name: caching the dependency
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ matrix.nodejs_version }}-modules-${{ hashFiles('package-lock.json') }}
 
       - name: printing env variables
         run: |
@@ -57,5 +63,5 @@ jobs:
       - name: upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: Mocha-test-Result
+          name: Mocha-test-Result-${{ matrix.nodejs_version }}-${{ matrix.operating_system }}
           path: test-results.xml          
