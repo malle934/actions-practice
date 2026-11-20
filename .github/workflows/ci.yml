@@ -35,6 +35,11 @@ jobs:
         with:
           node-version: ${{ matrix.nodejs_version}}
 
+      - name: caching the dependency
+        uses: actions/cahce@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ matrix.nodejs_version }}-modules-${{ hashFiles('package-lock.json') }}
 
       - name: printing env variables
         run: |
