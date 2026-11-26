@@ -104,3 +104,67 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/appdb
         run: npm run test:local      
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup node 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20        
+
+      - name: install dependencies
+        run: npm install
+
+      - name: run eslit
+        run: npm run lint
+
+  coverage:
+    name: coverage
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: appdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10 
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install dependencies
+        run: npm install
+
+      - name: run coverage
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/appdb
+        run: npm run coverage
+
+      - name: upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report 
+          path: coverage/    
+
+
