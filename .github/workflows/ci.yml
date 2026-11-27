@@ -165,6 +165,42 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report 
-          path: coverage/    
+          path: coverage/   
+
+  docker:
+    name: docker
+    runs-on: ubuntu-latest     
+    needs: [unit-testing,integration-testing,lint,coverage]
+
+    steps:
+      - name: checkout report
+        uses: actions/checkout@v4
+
+      - name: docker hub login
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD}}      
+
+      - name: Build Docker Image for Testing
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }}   
+
+      - name: smoke test the container
+        run: |
+          docker run -d --name app -p 3000:3000 ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }} 
+          sleep 3
+          curl --fail http://localhost:3000/health 
+
+      - name: docker push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }}     
+
 
 
