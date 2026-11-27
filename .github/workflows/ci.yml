@@ -193,8 +193,14 @@ jobs:
         run: |
           docker run -d --name app -p 3000:3000 ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }} 
           sleep 3
-          curl --fail http://localhost:3000/health
-          docker rm -f app     
+          curl --fail http://localhost:3000/health 
+
+      - name: docker push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.name }}/practice:${{ github.sha }}      
 
 
 
