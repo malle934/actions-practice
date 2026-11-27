@@ -52,7 +52,7 @@ jobs:
 
      
       - name: install dependencies
-        if: steps.cache-dependencies.outputs.cache.hit != true 
+        if: steps.cache-dependencies.outputs.cache.hit != 'true' 
         run: npm install
 
       - name: Printing env variable
