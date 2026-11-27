@@ -191,7 +191,7 @@ jobs:
 
       - name: smoke test the container
         run: |
-          docker run -d --name app -p 3000:3000 actions-practice:${{ github.sha }}
+          docker run -d --name app -p 3000:3000 ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }} 
           sleep 3
           curl --fail http://localhost:3000/health
           docker rm -f app     
