@@ -200,7 +200,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.name }}/practice:${{ github.sha }}      
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }}     
 
 
 
