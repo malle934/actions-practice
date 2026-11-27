@@ -193,6 +193,7 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }}   
 
       - name: smoke test the container
+        if: github.ref == 'refs/heads/main'
         run: |
           docker run -d --name app -p 3000:3000 ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }} 
           sleep 3
