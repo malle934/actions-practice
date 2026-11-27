@@ -60,6 +60,15 @@ jobs:
           echo ${{ env.APP_NAME }}
           echo ${{ secrets.API_KEY}}  
 
+      - name: Experimental test
+        id: experimental-test
+        run: exit 1 
+        continue-on-error: true   
+
+      - name: Print failure message
+        if: steps.experimental-test.outcome == 'failure'
+        run: echo "Experimental test failed"  
+
       - name: run unit test
         run: npm test
 
