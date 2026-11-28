@@ -1,0 +1,24 @@
+name: reusable-testing
+
+on:
+  workflow_call:
+
+jobs:
+  testing:
+    name: testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: setupnode
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install dependencies
+        run: npm install
+
+      - name: testing node app
+        run: npm test      
