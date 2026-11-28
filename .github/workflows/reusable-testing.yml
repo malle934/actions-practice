@@ -2,6 +2,11 @@ name: reusable-testing
 
 on:
   workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+
 
 jobs:
   testing:
@@ -15,7 +20,7 @@ jobs:
       - name: setupnode
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ inputs.node-version }}
 
       - name: install dependencies
         run: npm install
