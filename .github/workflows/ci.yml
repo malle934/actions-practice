@@ -219,5 +219,25 @@ jobs:
             ${{ vars.DOCKERHUB_USERNAME }}/practice:${{ github.sha }}  
             ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}   
 
+  container-testing:
+    name: testing on job container
+    runs-on: ubuntu-latest
+    container: 
+      image: node:20
 
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: verify environment
+        run: |
+          node --version
+          npm --version
+          cat /etc/os-release  
+
+      - name: install dependencies
+        run: npm install
+
+      - name: testing node app
+        run: npm test          
 
